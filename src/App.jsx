@@ -1,52 +1,33 @@
-import { useState } from "react";
+import Navbar from "./components/Navbar.jsx";
+import Homepage from "./pages/Homepage.jsx";
 
-export default function App() {
+import {BrowserRouter as Router , Routes , Route} from "react-router-dom"
+import AddPAge from './pages/AddPage';
+import ListePage from './pages/ListePage';
+import UpdatePage from './pages/UpdatePage';
+import DetailsPAge from './pages/DetailsPage';
+import { CarProvider } from "./context/CarContext.jsx";
 
-  const [todos , setTodos] = useState([
-    {
-      id : 1,
-      titre : "faire la vaisselle",
-      completed : false
-    }
-  ])
-
-  // ajout 
-  const addTask = (task) => {
-      setTodos([...todos,task])
-  }
-
-
-
-  // retirer
-  const removeTask = (id) => {
-      setTodos(todos.filter((t) => t.id !== id))
-  }
-
-  // modifier
-const updateTask = (id) => {
-  setTodos((prev) => prev.map((t) => t.id === id ? {...t,completed:false} : t))
-}
-
+export default function App(){
 
   return (
-    <>
-      {/*avec un composant gérer l'ajout : input */}
+    <CarProvider>
+
+      <Router>
+
+        <Navbar/>
+
+        <Routes>
+            <Route path="" element={<Homepage/>}  />
+            <Route path="add" element={<AddPAge/>} />
+            <Route path="liste" element={<ListePage/>} />
+            <Route path="update" element={<UpdatePage/>} />
+            <Route path="details" element={<DetailsPAge/>} />
 
 
-      {/*avec un composant gérer l'affichage  , la modification et la suppression: <button onClick={}> */}
+        </Routes>
 
-    </>
-
+      </Router>
+    </CarProvider>
   )
-}
-
-function InputTodo(){
-  // ajout
-
-}
-
-function ShowTodos(){
-  // modifier
-  // supprimer
-
 }

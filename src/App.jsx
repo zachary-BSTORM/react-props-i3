@@ -6,6 +6,8 @@ import AddPAge from './pages/AddPage';
 import ListePage from './pages/ListePage';
 import UpdatePage from './pages/UpdatePage';
 import DetailsPAge from './pages/DetailsPage';
+
+
 import { CarProvider } from "./context/CarContext.jsx";
 
 export default function App(){
@@ -21,13 +23,14 @@ export default function App(){
             <Route path="" element={<Homepage/>}  />
             <Route path="add" element={<AddPAge/>} />
             <Route path="liste" element={<ListePage/>} />
-            <Route path="update" element={<UpdatePage/>} />
-            <Route path="details" element={<DetailsPAge/>} />
+            <Route path="update/:id" element={<UpdatePage/>} />
+            <Route path="details/:id" element={<DetailsPAge/>} />
 
 
         </Routes>
 
       </Router>
+
     </CarProvider>
   )
 }

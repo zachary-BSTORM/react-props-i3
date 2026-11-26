@@ -1,9 +1,18 @@
 import { useCarContext } from "../hooksPerso/useCarContext";
+import {Link , useNavigate} from 'react-router-dom'
 
 
 export default function ListePage(){
+    // récupération des methodes necessaires depuis le hookPerso
     const {cars,deleteCar} = useCarContext()
 
+    // instance qui permet de déclencher la navigation
+    const navigate = useNavigate()
+
+    // methode qui declenche la navigation
+    const redirectToDetails = (id) => {
+            navigate(`/details/${id}`)
+    }
 
     return(
         <>
@@ -19,8 +28,9 @@ export default function ListePage(){
                             <p>{c.price}</p>
                             <p>{c.serialNumber}</p>
                             <div>
-                                <button>Details</button>
-                                <button>Update</button>
+                                <button onClick={() => redirectToDetails(c.id)}>Details</button>
+                                <Link to={`/details/${c.id}`} >Details</Link>
+                                <button onClick={() => navigate(`/update/${c.id}`)}>Update</button>
                                 <button onClick={() => deleteCar(c.id)}>Delete</button>
                             </div>
                         </div>

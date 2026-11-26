@@ -10,7 +10,7 @@ export const CarContext = createContext(null)
 // Provider : fournisseur d'informations et d'actions
 export function CarProvider({children}){
 
-// données
+// données globale à l'application 
   const [cars, setCars] = useState([
     {
       id: 1,
@@ -54,10 +54,19 @@ export function CarProvider({children}){
     },
   ]);
 
-// actions
+
+// actions disponibles --------------------------------
+
+const getLastId = () => {
+  if (cars.length < 1) {
+    return 1
+  }else {
+    return cars[cars.length - 1].id + 1
+  }
+}
 
 const addCar = (newCar) => {
-    newCar.id = cars[cars.length - 1].id + 1
+    newCar.id = getLastId()
     setCars((prev) => [...prev,newCar])
 }
 
@@ -66,16 +75,15 @@ const getCars = () => {
 }
 
 const getCarById = (id) => {
-    const index = cars.findIndex((c) => c.id === id)
+  
+    const index = cars.findIndex((c) => c.id === Number(id))
     return cars[index]
 }
 
-
 const updateCar = (id,car) => {
     setCars((prev) => 
-        prev.map((c) => c.id === id ? {...c,brand:car.band} : c))
+        prev.map((c) => c.id === Number(id) ? {id : c.id , ...car} : c))
 }
-
 
 const deleteCar = (id) => {
     setCars((prev) => prev.filter((c) => c.id !== id))
@@ -83,7 +91,6 @@ const deleteCar = (id) => {
 
 
 // renvoyer certains éléments
-
 return(
     <CarContext.Provider value={{cars,addCar,getCars,getCarById,updateCar,deleteCar}}>
         {children}
@@ -91,5 +98,3 @@ return(
 )
 
 }
-
-// export des éléments
